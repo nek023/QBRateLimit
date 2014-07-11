@@ -8,7 +8,14 @@
 
 #import "ViewController.h"
 
-@interface ViewController ()
+#import "QBRateLimit.h"
+
+@interface ViewController () <QBRateLimitDelegate>
+
+@property (weak, nonatomic) IBOutlet UILabel *remainingLabel;
+@property (weak, nonatomic) IBOutlet UIButton *performRequestButton;
+
+@property (nonatomic, strong) QBRateLimit *rateLimit;
 
 @end
 
@@ -17,13 +24,45 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    
+    // Create rate limit
+    QBRateLimit *rateLimit = [[QBRateLimit alloc] init];
+    rateLimit.delegate = self;
+    rateLimit.interval = 10.0;
+    rateLimit.limit = 3;
+    
+    self.rateLimit = rateLimit;
+    
+    [self updateRemainingLabel];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)updateRemainingLabel
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    self.remainingLabel.text = [NSString stringWithFormat:@"Remaining: %lu", self.rateLimit.remaining];
+}
+
+
+#pragma mark - Actions
+
+- (IBAction)performRequest:(id)sender
+{
+    [self.rateLimit performReqeust];
+    
+    [self updateRemainingLabel];
+    
+    if ([self.rateLimit isExceeded]) {
+        self.performRequestButton.enabled = NO;
+    }
+}
+
+
+#pragma mark - QBRateLimitDelegage
+
+- (void)rateLimitDidReset:(QBRateLimit *)rateLimit
+{
+    [self updateRemainingLabel];
+    
+    self.performRequestButton.enabled = YES;
 }
 
 @end

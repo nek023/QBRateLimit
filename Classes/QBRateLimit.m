@@ -24,6 +24,7 @@
     self = [super init];
     
     if (self) {
+        // Rate limit from Twitter API 1.1
         self.interval = 60.0 * 15.0; // 15 minutes
         self.limit = 15;
     }
