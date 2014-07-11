@@ -17,9 +17,9 @@ Pod::Spec.new do |s|
   s.author           = { "questbeat" => "questbeat@gmail.com" }
   s.source           = { :git => "https://github.com/questbeat/QBRateLimit.git", :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/questbeat'
+  s.requires_arc     = true
+  s.source_files     = 'Classes'
 
-  s.platform     = :ios, '6.0'
-  s.requires_arc = true
-
-  s.source_files = 'Classes'
+  s.ios.deployment_target = '6.0'
+  s.osx.deployment_target = '10.7'
 end
