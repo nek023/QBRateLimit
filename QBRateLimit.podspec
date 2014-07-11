@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.name             = "QBRateLimit"
   s.version          = "1.0.0"
   s.summary          = "Rate limit controller."
-  s.description      = "A rate limit controller for avoiding excess HTTP requests or preventing UI from tapped repeatedly."
+  s.description      = "A rate limit controller for avoiding excess HTTP requests or preventing UI from being tapped repeatedly."
   s.homepage         = "https://github.com/questbeat/QBRateLimit"
   s.license          = 'MIT'
   s.author           = { "questbeat" => "questbeat@gmail.com" }
